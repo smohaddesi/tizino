@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Subject extends Model
+{
+    protected $fillable = [
+        'grade_id',
+        'title',
+        'sort_order',
+    ];
+
+    public function grade(): BelongsTo
+    {
+        return $this->belongsTo(Grade::class);
+    }
+    public function topics(): HasMany
+{
+    return $this->hasMany(Topic::class);
+}
+}

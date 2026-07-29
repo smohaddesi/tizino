@@ -14,26 +14,31 @@ class GradesTable
     {
         return $table
             ->columns([
-                TextColumn::make('title')
+                TextColumn::make('name')
+                    ->label('نام پایه')
                     ->searchable(),
+
+                TextColumn::make('code')
+                    ->label('کد پایه')
+                    ->sortable(),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('تاریخ ایجاد')
+                    ->jalaliDateTime(),
+
                 TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
+                    ->label('آخرین بروزرسانی')
+                    ->jalaliDateTime()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('ویرایش'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->label('حذف'),
                 ]),
             ]);
     }

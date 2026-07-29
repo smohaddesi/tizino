@@ -13,11 +13,11 @@ class SubjectForm
         return $schema
             ->components([
                 Select::make('grade_id')
-                    ->label('پایه')
-                    ->relationship('grade', 'name')
+                    ->relationship('grade', 'title')
                     ->searchable()
                     ->preload()
-                    ->required(),
+                    ->required()
+                    ->label('پایه'),
 
                 TextInput::make('title')
                     ->label('نام درس')

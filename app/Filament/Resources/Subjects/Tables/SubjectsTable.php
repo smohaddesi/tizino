@@ -14,43 +14,31 @@ class SubjectsTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('شناسه')
-                    ->sortable(),
-
-                TextColumn::make('grade.name')
-                    ->label('پایه')
-                    ->sortable()
-                    ->searchable(),
-
-                TextColumn::make('title')
+                TextColumn::make('name')
                     ->label('نام درس')
-                    ->sortable()
                     ->searchable(),
 
-                TextColumn::make('sort_order')
-                    ->label('ترتیب نمایش')
+                TextColumn::make('code')
+                    ->label('کد درس')
                     ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label('تاریخ ایجاد')
-                    ->dateTime('Y/m/d H:i')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->jalaliDateTime(),
 
                 TextColumn::make('updated_at')
-                    ->label('آخرین ویرایش')
-                    ->dateTime('Y/m/d H:i')
+                    ->label('آخرین بروزرسانی')
+                    ->jalaliDateTime()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('ویرایش'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->label('حذف'),
                 ]),
             ]);
     }

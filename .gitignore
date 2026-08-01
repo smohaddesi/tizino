@@ -28,3 +28,8 @@ Thumbs.db
 /public/css/filament
 /public/js/filament
 /public/fonts/filament
+# Laravel runtime files
+/bootstrap/cache/*.php
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*

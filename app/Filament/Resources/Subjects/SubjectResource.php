@@ -26,9 +26,11 @@ class SubjectResource extends Resource
 
     protected static ?string $pluralModelLabel = 'درس‌ها';
 
-    protected static ?string $navigationGroup = 'بانک سوالات';
+    protected static string|\UnitEnum|null $navigationGroup = 'بانک سوالات';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema
     {

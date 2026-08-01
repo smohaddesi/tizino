@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Grades\Tables;
+namespace App\Filament\Resources\Topics\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -8,29 +8,26 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class GradesTable
+class TopicsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label('نام پایه')
-                    ->searchable()
+                TextColumn::make('subject.title')
+                    ->searchable(),
+                TextColumn::make('title')
+                    ->searchable(),
+                TextColumn::make('sort_order')
+                    ->numeric()
                     ->sortable(),
-
-                TextColumn::make('code')
-                    ->label('کد')
-                    ->sortable(),
-
                 TextColumn::make('created_at')
-                    ->label('تاریخ ایجاد')
                     ->dateTime()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('updated_at')
-                    ->label('آخرین بروزرسانی')
                     ->dateTime()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([

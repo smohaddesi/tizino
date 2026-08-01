@@ -1,36 +1,42 @@
 <?php
 
-namespace App\Filament\Resources\Grades\Tables;
+namespace App\Filament\Resources\Questions\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class GradesTable
+class QuestionsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label('نام پایه')
-                    ->searchable()
+                TextColumn::make('topic_id')
+                    ->numeric()
                     ->sortable(),
-
-                TextColumn::make('code')
-                    ->label('کد')
+                ImageColumn::make('image'),
+                TextColumn::make('difficulty')
+                    ->numeric()
                     ->sortable(),
-
+                TextColumn::make('answer_time')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('source')
+                    ->searchable(),
+                IconColumn::make('is_active')
+                    ->boolean(),
                 TextColumn::make('created_at')
-                    ->label('تاریخ ایجاد')
                     ->dateTime()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('updated_at')
-                    ->label('آخرین بروزرسانی')
                     ->dateTime()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([

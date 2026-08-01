@@ -1,30 +1,24 @@
 <?php
 
-namespace App\Filament\Resources\Subjects\Schemas;
+namespace App\Filament\Resources\Topics\Schemas;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
-class SubjectForm
+class TopicForm
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                Select::make('grade_id')
-                    ->label('پایه')
-                    ->relationship('grade', 'name')
-                    ->required()
-                    ->searchable()
-                    ->preload(),
-
-                TextInput::make('title')
-                    ->label('عنوان درس')
+                Select::make('subject_id')
+                    ->relationship('subject', 'title')
                     ->required(),
-
+                TextInput::make('title')
+                    ->required(),
                 TextInput::make('sort_order')
-                    ->label('ترتیب نمایش')
+                    ->required()
                     ->numeric()
                     ->default(0),
             ]);

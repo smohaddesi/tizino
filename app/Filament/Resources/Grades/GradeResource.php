@@ -2,115 +2,55 @@
 
 namespace App\Filament\Resources\Grades;
 
-use App\Filament\Resources\Grades\GradeResource\Pages;
+use App\Filament\Resources\Grades\Pages\CreateGrade;
+use App\Filament\Resources\Grades\Pages\EditGrade;
+use App\Filament\Resources\Grades\Pages\ListGrades;
+use App\Filament\Resources\Grades\Schemas\GradeForm;
+use App\Filament\Resources\Grades\Tables\GradesTable;
 use App\Models\Grade;
-use Filament\Forms;
-use Filament\Forms\Form;
+use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
 
 class GradeResource extends Resource
 {
     protected static ?string $model = Grade::class;
 
-    protected static string $navigationIcon = 'heroicon-o-academic-cap';
-    
-    protected static string $navigationGroup = 'مدیریت پایه‌ها';
-    
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedAcademicCap;
+
+    protected static ?string $navigationLabel = 'پایه‌ها';
+
+    protected static ?string $modelLabel = 'پایه';
+
+    protected static ?string $pluralModelLabel = 'پایه‌ها';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'بانک سوالات';
+
     protected static ?int $navigationSort = 1;
 
-    public static function getModelLabel(): string
+    public static function form(Schema $schema): Schema
     {
-        return 'پایه تحصیلی';
-    }
-
-    public static function getPluralModelLabel(): string
-    {
-        return 'پایه‌های تحصیلی';
-    }
-
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('نام پایه')
-                    ->required()
-                    ->maxLength(255)
-                    ->unique(ignoreRecord: true),
-                    
-                Forms\Components\TextInput::make('code')
-                    ->label('کد پایه')
-                    ->required()
-                    ->maxLength(50)
-                    ->unique(ignoreRecord: true)
-                    ->helperText('مثال: GRADE-001'),
-            ]);
+        return GradeForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label('نام پایه')
-                    ->searchable()
-                    ->sortable(),
-                    
-                Tables\Columns\TextColumn::make('code')
-                    ->label('کد پایه')
-                    ->searchable()
-                    ->sortable(),
-                    
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('تاریخ ایجاد')
-                    ->dateTime('Y/m/d H:i')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                    
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label('آخرین بروزرسانی')
-                    ->dateTime('Y/m/d H:i')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make()
-                    ->label('ویرایش'),
-                Tables\Actions\DeleteAction::make()
-                    ->label('حذف'),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()
-                        ->label('حذف انتخابی'),
-                ]),
-            ]);
+        return GradesTable::configure($table);
     }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGrades::route('/'),
-            'create' => Pages\CreateGrade::route('/create'),
-            'edit' => Pages\EditGrade::route('/{record}/edit'),
+            'index' => ListGrades::route('/'),
+            'create' => CreateGrade::route('/create'),
+            'edit' => EditGrade::route('/{record}/edit'),
         ];
     }
 }

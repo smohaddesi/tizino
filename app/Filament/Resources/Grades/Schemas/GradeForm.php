@@ -11,16 +11,8 @@ class GradeForm
     {
         return $schema
             ->components([
-                TextInput::make('name')
-                    ->label('نام پایه')
-                    ->required()
-                    ->maxLength(50),
-
-                TextInput::make('code')
-                    ->label('کد پایه')
-                    ->numeric()
-                    ->required()
-                    ->unique(ignoreRecord: true),
+                TextInput::make('title')
+                    ->required(),
             ]);
     }
 }

@@ -1,24 +1,22 @@
 <?php
 
-namespace App\Filament\Resources\Grades;
+namespace App\Filament\Resources;
 
-use App\Filament\Resources\Grades\Pages\CreateGrade;
-use App\Filament\Resources\Grades\Pages\EditGrade;
-use App\Filament\Resources\Grades\Pages\ListGrades;
-use App\Filament\Resources\Grades\Schemas\GradeForm;
-use App\Filament\Resources\Grades\Tables\GradesTable;
+use App\Filament\Resources\GradeResource\Pages;
 use App\Models\Grade;
-use BackedEnum;
+use Filament\Forms\Form;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
+use Filament\Tables;
 use Filament\Tables\Table;
 
 class GradeResource extends Resource
 {
     protected static ?string $model = Grade::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedAcademicCap;
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+
+    protected static ?string $navigationGroup = 'بانک سوال';
 
     protected static ?string $navigationLabel = 'پایه‌ها';
 
@@ -26,31 +24,52 @@ class GradeResource extends Resource
 
     protected static ?string $pluralModelLabel = 'پایه‌ها';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'بانک سوالات';
-
     protected static ?int $navigationSort = 1;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return GradeForm::configure($schema);
+        return $form
+            ->schema([
+                TextInput::make('title')
+                    ->label('عنوان پایه')
+                    ->required()
+                    ->maxLength(50)
+                    ->columnSpanFull(),
+            ]);
     }
 
     public static function table(Table $table): Table
     {
-        return GradesTable::configure($table);
-    }
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label('#')
+                    ->sortable(),
 
-    public static function getRelations(): array
-    {
-        return [];
+                Tables\Columns\TextColumn::make('title')
+                    ->label('عنوان')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('تاریخ ایجاد')
+                    ->dateTime('Y/m/d H:i'),
+            ])
+            ->defaultSort('id')
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]);
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ListGrades::route('/'),
-            'create' => CreateGrade::route('/create'),
-            'edit' => EditGrade::route('/{record}/edit'),
+            'index' => Pages\ListGrades::route('/'),
+            'create' => Pages\CreateGrade::route('/create'),
+            'edit' => Pages\EditGrade::route('/{record}/edit'),
         ];
     }
 }

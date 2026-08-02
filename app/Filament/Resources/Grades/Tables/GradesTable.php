@@ -14,23 +14,15 @@ class GradesTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label('نام پایه')
-                    ->searchable()
-                    ->sortable(),
-
-                TextColumn::make('code')
-                    ->label('کد')
-                    ->sortable(),
-
+                TextColumn::make('title')
+                    ->searchable(),
                 TextColumn::make('created_at')
-                    ->label('تاریخ ایجاد')
                     ->dateTime()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('updated_at')
-                    ->label('آخرین بروزرسانی')
                     ->dateTime()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([

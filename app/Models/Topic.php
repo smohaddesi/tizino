@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Topic extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'subject_id',
         'title',
@@ -21,6 +24,7 @@ class Topic extends Model
 
     public function questions(): HasMany
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Question::class)
+            ->orderBy('id');
     }
 }

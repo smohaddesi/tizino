@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Subjects\Schemas;
 
+use App\Models\Grade;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -14,19 +15,23 @@ class SubjectForm
             ->components([
                 Select::make('grade_id')
                     ->label('پایه')
-                    ->relationship('grade', 'name')
-                    ->required()
+                    ->relationship('grade', 'title')
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->required(),
 
                 TextInput::make('title')
                     ->label('عنوان درس')
-                    ->required(),
+                    ->required()
+                    ->maxLength(100)
+                    ->placeholder('مثلاً: ریاضی')
+                    ->columnSpanFull(),
 
                 TextInput::make('sort_order')
                     ->label('ترتیب نمایش')
                     ->numeric()
-                    ->default(0),
+                    ->default(0)
+                    ->required(),
             ]);
     }
 }

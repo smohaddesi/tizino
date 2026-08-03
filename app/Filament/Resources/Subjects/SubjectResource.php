@@ -11,14 +11,16 @@ use App\Models\Subject;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class SubjectResource extends Resource
 {
     protected static ?string $model = Subject::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBookOpen;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-book-open';
+
+    protected static string|UnitEnum|null $navigationGroup = 'بانک سوال';
 
     protected static ?string $navigationLabel = 'درس‌ها';
 
@@ -26,11 +28,9 @@ class SubjectResource extends Resource
 
     protected static ?string $pluralModelLabel = 'درس‌ها';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'بانک سوالات';
+    protected static ?string $recordTitleAttribute = 'title';
 
     protected static ?int $navigationSort = 2;
-
-    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema
     {
@@ -40,11 +40,6 @@ class SubjectResource extends Resource
     public static function table(Table $table): Table
     {
         return SubjectsTable::configure($table);
-    }
-
-    public static function getRelations(): array
-    {
-        return [];
     }
 
     public static function getPages(): array

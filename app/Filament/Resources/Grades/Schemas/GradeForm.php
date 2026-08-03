@@ -12,7 +12,12 @@ class GradeForm
         return $schema
             ->components([
                 TextInput::make('title')
-                    ->required(),
+                    ->label('عنوان پایه')
+                    ->required()
+                    ->maxLength(50)
+                    ->placeholder('مثلاً: پایه ششم')
+                    ->autocomplete(false)
+                    ->columnSpanFull(),
             ]);
     }
 }

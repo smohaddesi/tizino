@@ -13,15 +13,26 @@ class GradesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('id')
             ->columns([
+                TextColumn::make('id')
+                    ->label('#')
+                    ->sortable(),
+
                 TextColumn::make('title')
-                    ->searchable(),
+                    ->label('عنوان پایه')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('تاریخ ایجاد')
+                    ->dateTime('Y/m/d H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('آخرین بروزرسانی')
+                    ->dateTime('Y/m/d H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -29,11 +40,13 @@ class GradesTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('ویرایش'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->label('حذف'),
                 ]),
             ]);
     }

@@ -13,13 +13,20 @@ class SubjectsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('sort_order')
             ->columns([
-                TextColumn::make('grade.name')
+                TextColumn::make('id')
+                    ->label('#')
+                    ->sortable(),
+
+                TextColumn::make('grade.title')
                     ->label('پایه')
+                    ->sortable()
                     ->searchable(),
 
                 TextColumn::make('title')
-                    ->label('درس')
+                    ->label('عنوان درس')
+                    ->sortable()
                     ->searchable(),
 
                 TextColumn::make('sort_order')
@@ -27,24 +34,28 @@ class SubjectsTable
                     ->sortable(),
 
                 TextColumn::make('created_at')
-                    ->label('ایجاد')
-                    ->dateTime()
+                    ->label('تاریخ ایجاد')
+                    ->dateTime('Y/m/d H:i')
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
-                    ->label('ویرایش')
-                    ->dateTime()
+                    ->label('آخرین بروزرسانی')
+                    ->dateTime('Y/m/d H:i')
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('ویرایش'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->label('حذف'),
                 ]),
             ]);
     }

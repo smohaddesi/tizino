@@ -12,8 +12,8 @@
 
 ## Phase 2
 
-- [ ] Grade Resource
-- [ ] Subject Resource
+- [x] Grade Resource
+- [x] Subject Resource
 - [ ] Topic Resource
 - [ ] Question Resource
 - [ ] Exam Resource

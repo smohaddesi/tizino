@@ -16,3 +16,17 @@
 - مدیریت کاربران
 - مدیریت نقش‌ها
 - تنظیمات سایت
+
+Admin Panel
+
+Laravel 12
+Filament 5.7.4
+
+Resource Structure
+
+Resources/
+    Grades/
+    Subjects/
+    Topics/
+    Questions/
+    Exams/

@@ -46,3 +46,6 @@ Commitهای کوچک و مشخص ایجاد شوند.
 - ابتدا نسخه نصب‌شده بررسی شود.
 - سپس کد بر اساس همان نسخه نوشته شود.
 - از حدس زدن API نسخه‌ها خودداری شود.
+
+- Always send complete files when modifying code.
+- Follow Filament v5.7.4 conventions.

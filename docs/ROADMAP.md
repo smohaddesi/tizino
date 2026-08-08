@@ -1,6 +1,6 @@
 # Roadmap
 
-## Phase 1
+## Phase 1 — Database
 
 - [x] Grade
 - [x] Subject
@@ -10,17 +10,24 @@
 - [x] Exam Database
 - [x] Exam Models
 
-## Phase 2
+## Phase 2 — Filament Admin
 
 - [x] Grade Resource
 - [x] Subject Resource
-- [ ] Topic Resource
-- [ ] Question Resource
+- [x] Topic Resource
+- [x] Question Resource
+- [x] QuestionOption Resource
 - [ ] Exam Resource
 
-## Phase 3
+## Phase 3 — Student & Exam UI
 
 - [ ] Student Panel
 - [ ] Online Exam
+- [ ] Timed Exam
 - [ ] Reports
 - [ ] Dashboard
+- [ ] Analytics
+- [ ] Progress Charts
+- [ ] User Management
+- [ ] Role Management
+- [ ] Settings

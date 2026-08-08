@@ -1,17 +1,20 @@
-# Changelog
-
-## 2026-08-02
-
-- طراحی بانک سوال تکمیل شد.
-- مدل‌های سیستم آزمون تکمیل شدند.
-- Migrationهای سیستم آزمون ایجاد شدند.
-- شروع توسعه Filament Resource.
-
 ## 2026-08-03
 
 ### Added
-- Grade Resource (Filament v5)
-- Subject Resource (Filament v5)
+
+- Grade Resource
+- Subject Resource
 - Grade ↔ Subject relationship
 - Persian admin labels
-- Standard Filament v5 resource structure
+
+### Changed
+
+- Migrated admin resources to Filament v5 structure
+
+## 2026-08-0X (تاریخ واقعی رو خودت جایگزین کن)
+
+### Added
+
+- Topic Resource (Filament v5)
+- Question Resource (Filament v5)
+- QuestionOption Resource (Filament v5)

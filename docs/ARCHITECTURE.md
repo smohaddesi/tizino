@@ -17,16 +17,19 @@
 - مدیریت نقش‌ها
 - تنظیمات سایت
 
-Admin Panel
+## Tech Stack
 
-Laravel 12
-Filament 5.7.4
+- Laravel 13.23.0
+- Filament 5.7.4
+- PHP ^8.3
+- Livewire 4.3.3
+- MySQL
 
-Resource Structure
+## Admin Resources
 
-Resources/
-    Grades/
-    Subjects/
-    Topics/
-    Questions/
-    Exams/
+- Grades
+- Subjects
+- Topics
+- Questions
+- QuestionOptions
+- Exams (در حال توسعه)

@@ -30,3 +30,11 @@
 
 - Exam Resource (Filament v5)
 - QuestionsRelationManager for Exam (مدیریت سؤال‌های هر آزمون)
+## 2026-08-08
+
+### Added
+
+- Exam Resource (Filament v5)
+- QuestionsRelationManager for Exam
+- User roles (spatie/laravel-permission v8.3.0) — admin/student
+- Panel access restricted to admin role only

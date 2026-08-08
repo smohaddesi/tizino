@@ -18,3 +18,8 @@
 - Topic Resource (Filament v5)
 - Question Resource (Filament v5)
 - QuestionOption Resource (Filament v5)
+## 2026-08-08
+
+### Added
+
+- Exam Resource (Filament v5)

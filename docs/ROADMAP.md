@@ -17,7 +17,7 @@
 - [x] Topic Resource
 - [x] Question Resource
 - [x] QuestionOption Resource
-- [ ] Exam Resource
+- [x] Exam Resource
 
 ## Phase 3 — Student & Exam UI
 

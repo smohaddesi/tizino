@@ -23,3 +23,10 @@
 ### Added
 
 - Exam Resource (Filament v5)
+
+## 2026-08-08
+
+### Added
+
+- Exam Resource (Filament v5)
+- QuestionsRelationManager for Exam (مدیریت سؤال‌های هر آزمون)

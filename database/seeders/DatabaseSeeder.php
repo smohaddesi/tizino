@@ -15,6 +15,7 @@ public function run(): void
         RoleSeeder::class,
         GradeSeeder::class,
         SubjectSeeder::class,
+        TopicSeeder::class,
     ]);
 }
 }

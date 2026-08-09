@@ -38,3 +38,11 @@
 - QuestionsRelationManager for Exam
 - User roles (spatie/laravel-permission v8.3.0) — admin/student
 - Panel access restricted to admin role only
+
+## 2026-08-08 (ادامه)
+
+### Added
+
+- Student registration & login (outside Filament panel)
+- Auto-assign "student" role on registration
+- Placeholder student dashboard

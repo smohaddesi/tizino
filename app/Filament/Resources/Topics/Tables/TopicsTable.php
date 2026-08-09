@@ -13,20 +13,27 @@ class TopicsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('sort_order')
             ->columns([
                 TextColumn::make('subject.title')
-                    ->searchable(),
+                    ->label('درس')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('title')
+                    ->label('عنوان موضوع')
                     ->searchable(),
                 TextColumn::make('sort_order')
+                    ->label('ترتیب نمایش')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('تاریخ ایجاد')
+                    ->dateTime('Y/m/d H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('آخرین ویرایش')
+                    ->dateTime('Y/m/d H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -34,11 +41,13 @@ class TopicsTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('ویرایش'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->label('حذف'),
                 ]),
             ]);
     }

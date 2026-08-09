@@ -19,6 +19,19 @@
         </div>
 
         <div class="mb-3">
+            <label for="grade_id" class="form-label">پایه‌ی تحصیلی</label>
+            <select id="grade_id" name="grade_id"
+                    class="form-select @error('grade_id') is-invalid @enderror" required>
+                <option value="">-- انتخاب پایه --</option>
+                @foreach ($grades as $grade)
+                    <option value="{{ $grade->id }}" @selected(old('grade_id') == $grade->id)>
+                        {{ $grade->title }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
             <label for="password" class="form-label">رمز عبور</label>
             <input id="password" type="password" name="password"
                    class="form-control @error('password') is-invalid @enderror" required>

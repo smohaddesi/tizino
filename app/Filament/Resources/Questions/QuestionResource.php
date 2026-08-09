@@ -13,12 +13,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class QuestionResource extends Resource
 {
     protected static ?string $model = Question::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static string|UnitEnum|null $navigationGroup = 'بانک سوال';
+
+    protected static ?string $navigationLabel = 'سؤال‌ها';
+
+    protected static ?string $modelLabel = 'سؤال';
+
+    protected static ?string $pluralModelLabel = 'سؤال‌ها';
+
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $recordTitleAttribute = 'body';
 

@@ -46,3 +46,18 @@
 - Student registration & login (outside Filament panel)
 - Auto-assign "student" role on registration
 - Placeholder student dashboard
+
+## 2026-08-09
+
+### Added
+
+- فیلد `grade_id` روی جدول `users` (تعیین پایه‌ی دانش‌آموز)
+- سیستم کامل گرفتن آزمون (شروع، پاسخ‌دهی AJAX، تایمر سمت سرور، پایان خودکار/دستی، نتیجه و مرور سؤالات)
+- نمایش لیست آزمون‌های در دسترس در داشبورد دانش‌آموز (بر اساس پایه، فعال بودن، بازه‌ی زمانی)
+
+### Changed
+
+- لیبل‌های فارسی برای فرم‌ها و جدول‌های Topic، Question، QuestionOption
+- بازطراحی فرم Question: گزینه‌های سؤال حالا از طریق Repeater داخل همون فرم مدیریت می‌شن (نه Resource جدا)
+- QuestionOptionResource از منوی ناوبری مخفی شد (چون از داخل فرم Question مدیریت می‌شه)
+- انتخاب موضوع در فرم سؤال به‌صورت Select با نمایش «درس » موضوع»

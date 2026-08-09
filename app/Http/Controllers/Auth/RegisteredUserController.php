@@ -16,7 +16,9 @@ class RegisteredUserController extends Controller
 {
     public function create(): View
     {
-        return view('auth.register');
+        return view('auth.register', [
+            'grades' => \App\Models\Grade::orderBy('id')->get(),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -24,12 +26,15 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'grade_id' => ['required', 'exists:grades,id'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
             'name.required' => 'وارد کردن نام الزامی است.',
             'email.required' => 'وارد کردن ایمیل الزامی است.',
             'email.email' => 'ایمیل وارد شده معتبر نیست.',
             'email.unique' => 'این ایمیل قبلاً ثبت‌نام شده است.',
+            'grade_id.required' => 'انتخاب پایه‌ی تحصیلی الزامی است.',
+            'grade_id.exists' => 'پایه‌ی انتخاب‌شده معتبر نیست.',
             'password.required' => 'وارد کردن رمز عبور الزامی است.',
             'password.confirmed' => 'تکرار رمز عبور مطابقت ندارد.',
         ]);
@@ -37,6 +42,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'grade_id' => $request->grade_id,
             'password' => Hash::make($request->password),
         ]);
 

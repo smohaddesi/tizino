@@ -16,23 +16,30 @@ class QuestionOptionsTable
     {
         return $table
             ->columns([
-                TextColumn::make('question_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('body')
+                TextColumn::make('question.body')
+                    ->label('سؤال')
+                    ->limit(40)
                     ->searchable(),
-                ImageColumn::make('image'),
+
+                TextColumn::make('body')
+                    ->label('متن گزینه')
+                    ->searchable(),
+
+                ImageColumn::make('image')
+                    ->label('تصویر'),
+
                 IconColumn::make('is_correct')
+                    ->label('پاسخ صحیح')
                     ->boolean(),
+
                 TextColumn::make('sort_order')
+                    ->label('ترتیب')
                     ->numeric()
                     ->sortable(),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('تاریخ ایجاد')
+                    ->dateTime('Y/m/d H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -40,11 +47,13 @@ class QuestionOptionsTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('ویرایش'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->label('حذف'),
                 ]),
             ]);
     }

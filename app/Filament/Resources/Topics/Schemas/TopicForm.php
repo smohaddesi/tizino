@@ -13,11 +13,16 @@ class TopicForm
         return $schema
             ->components([
                 Select::make('subject_id')
+                    ->label('درس')
                     ->relationship('subject', 'title')
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 TextInput::make('title')
+                    ->label('عنوان موضوع')
                     ->required(),
                 TextInput::make('sort_order')
+                    ->label('ترتیب نمایش')
                     ->required()
                     ->numeric()
                     ->default(0),

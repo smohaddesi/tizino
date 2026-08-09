@@ -13,12 +13,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class TopicResource extends Resource
 {
     protected static ?string $model = Topic::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static string|UnitEnum|null $navigationGroup = 'بانک سوال';
+
+    protected static ?string $navigationLabel = 'موضوعات';
+
+    protected static ?string $modelLabel = 'موضوع';
+
+    protected static ?string $pluralModelLabel = 'موضوعات';
+
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $recordTitleAttribute = 'title';
 

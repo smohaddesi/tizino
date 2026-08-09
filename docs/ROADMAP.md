@@ -20,7 +20,9 @@
 - [x] Exam Resource
 
 ## Phase 3 — Student & Exam UI
-
+- [x] Student registration & login
+- [x] Exam taking flow (timer, answers, scoring, review)
+- [ ] Reports / Dashboard / Analytics
 - [ ] Student Panel
 - [ ] Online Exam
 - [ ] Timed Exam

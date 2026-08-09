@@ -31,6 +31,8 @@ class AdminPanelProvider extends PanelProvider
 
             ->brandName('سامانه آزمون تیزینو')
 
+            ->font('Vazirmatn')
+
             ->login()
 
             ->colors([

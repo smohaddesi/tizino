@@ -1,1 +1,6 @@
+@import url('https://fonts.bunny.net/css?family=vazirmatn:400,500,600,700');
 @import "bootstrap/dist/css/bootstrap.min.css";
+
+body {
+    font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+}

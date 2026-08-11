@@ -31,6 +31,6 @@
 - [ ] Dashboard
 - [ ] Analytics
 - [ ] Progress Charts
-- [ ] User Management
+- [x] User Management (UserResource — مدیریت دانش‌آموزان و ادمین‌ها)
 - [ ] Role Management
 - [ ] Settings

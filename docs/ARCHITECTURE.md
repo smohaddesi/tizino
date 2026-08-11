@@ -34,7 +34,11 @@
 - QuestionOptions
 - Exams
 - ExamAttempts (نتایج آزمون‌ها — read-only، فقط View و Delete)
+- Users (مدیریت دانش‌آموزان و ادمین‌ها، شامل نقش و ریست رمز عبور)
 
 ## Notes
 
 - `config/app.php` مقدار `timezone` باید از `env('APP_TIMEZONE', 'UTC')` خونده بشه، نه هاردکد. پروژه روی `Asia/Tehran` تنظیم شده.
+- هر Resource باید مستقیم زیر `app/Filament/Resources/` باشه (نه زیر `app/Filament/`)، وگرنه PSR-4 autoload اون رو پیدا نمی‌کنه.
+- در Filament 5.7.4: کلاس `Get` از `Filament\Schemas\Components\Utilities\Get` میاد (نه `Filament\Forms\Get`)، و `Section` layout از `Filament\Schemas\Components\Section` میاد (نه `Filament\Infolists\Components\Section`).
+- ستون نام `Grade` در دیتابیس `title` است، نه `name`.

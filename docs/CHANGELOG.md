@@ -86,3 +86,24 @@
   - اصلاح به `'timezone' => env('APP_TIMEZONE', 'UTC')`
   - `.env` با `APP_TIMEZONE=Asia/Tehran` تنظیم شد
   - کش قدیمی `bootstrap/cache/config.php` که مانع اعمال شدن تنظیمات جدید می‌شد، پاک شد
+
+## 2026-08-12
+
+### Added
+
+- `UserResource` (Filament v5) — مدیریت کامل کاربران (دانش‌آموز و ادمین) برای ادمین
+  - فرم: نام، ایمیل، نقش (ادمین/دانش‌آموز)، پایه (فقط برای دانش‌آموز)، رمز عبور
+  - جدول: نام، ایمیل، نقش (badge)، پایه، تاریخ ثبت‌نام
+  - فیلترها: نقش، پایه
+  - اکشن‌ها: ویرایش، ریست رمز عبور (مودال جدا)، حذف
+  - محافظت در برابر حذف حساب ادمین لاگین‌شده توسط خودش
+  - همگام‌سازی نقش با `spatie/laravel-permission` از طریق هوک‌های `CreateUser`/`EditUser` (چون `role` ستون مستقیم روی جدول `users` نیست)
+
+### Fixed
+
+- اصلاح namespace اشتباه `Grade::title` (نه `name`) در فرم/جدول/فیلتر `UserResource`
+- اصلاح namespace کلاس `Get` در Filament 5.7.4: از `Filament\Schemas\Components\Utilities\Get` باید import بشه، نه `Filament\Forms\Get`
+
+### Notes
+
+- یادآوری ساختاری: هر Resource باید مستقیم زیر `app/Filament/Resources/` باشه (نه زیر `app/Filament/` یا داخل زیرپوشه‌ی خودش) تا PSR-4 autoload درست کار کنه.

@@ -32,4 +32,9 @@
 - Topics
 - Questions
 - QuestionOptions
-- Exams (در حال توسعه)
+- Exams
+- ExamAttempts (نتایج آزمون‌ها — read-only، فقط View و Delete)
+
+## Notes
+
+- `config/app.php` مقدار `timezone` باید از `env('APP_TIMEZONE', 'UTC')` خونده بشه، نه هاردکد. پروژه روی `Asia/Tehran` تنظیم شده.

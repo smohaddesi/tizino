@@ -18,6 +18,7 @@
 - [x] Question Resource
 - [x] QuestionOption Resource
 - [x] Exam Resource
+- [x] ExamAttempt Resource (نمایش/مرور نتایج آزمون‌ها — read-only)
 
 ## Phase 3 — Student & Exam UI
 - [x] Student registration & login

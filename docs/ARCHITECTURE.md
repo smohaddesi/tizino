@@ -4,6 +4,7 @@
 
 - بانک سوال
 - سیستم آزمون
+- صفحه‌ی فرود (Landing Page)
 
 ## Future Modules
 
@@ -13,7 +14,6 @@
 - کارنامه
 - تحلیل آزمون
 - نمودار پیشرفت
-- مدیریت کاربران
 - مدیریت نقش‌ها
 - تنظیمات سایت
 
@@ -42,3 +42,4 @@
 - هر Resource باید مستقیم زیر `app/Filament/Resources/` باشه (نه زیر `app/Filament/`)، وگرنه PSR-4 autoload اون رو پیدا نمی‌کنه.
 - در Filament 5.7.4: کلاس `Get` از `Filament\Schemas\Components\Utilities\Get` میاد (نه `Filament\Forms\Get`)، و `Section` layout از `Filament\Schemas\Components\Section` میاد (نه `Filament\Infolists\Components\Section`).
 - ستون نام `Grade` در دیتابیس `title` است، نه `name`.
+- `LandingController` (در `app/Http/Controllers/`) صفحه‌ی فرود عمومی رو با آمار زنده از دیتابیس رندر می‌کنه؛ روت `/` دیگه به `/admin` ریدایرکت نمی‌شه.

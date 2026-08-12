@@ -34,3 +34,4 @@
 - [x] User Management (UserResource — مدیریت دانش‌آموزان و ادمین‌ها)
 - [ ] Role Management
 - [ ] Settings
+- [x] Public Landing Page (نیاز به بهسازی بیشتر دارد)

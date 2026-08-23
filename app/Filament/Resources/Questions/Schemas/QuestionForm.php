@@ -2,7 +2,11 @@
 
 namespace App\Filament\Resources\Questions\Schemas;
 
+use App\Models\Grade;
+use App\Models\Question;
+use App\Models\Subject;
 use App\Models\Topic;
+use Closure;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
@@ -12,8 +16,10 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 class QuestionForm
 {
@@ -24,20 +30,40 @@ class QuestionForm
                 Section::make('اطلاعات سؤال')
                     ->columns(3)
                     ->schema([
+                        Select::make('grade_filter')
+                            ->label('پایه')
+                            ->options(fn () => Grade::query()->pluck('title', 'id'))
+                            ->live()
+                            ->dehydrated(false)
+                            ->afterStateUpdated(fn (Set $set) => $set('subject_filter', null))
+                            ->afterStateHydrated(function (Select $component, ?Question $record) {
+                                if ($record?->topic?->subject?->grade_id) {
+                                    $component->state($record->topic->subject->grade_id);
+                                }
+                            }),
+
+                        Select::make('subject_filter')
+                            ->label('درس')
+                            ->options(fn (Get $get) => Subject::query()
+                                ->when($get('grade_filter'), fn ($q, $gradeId) => $q->where('grade_id', $gradeId))
+                                ->pluck('title', 'id'))
+                            ->live()
+                            ->dehydrated(false)
+                            ->afterStateUpdated(fn (Set $set) => $set('topic_id', null))
+                            ->afterStateHydrated(function (Select $component, ?Question $record) {
+                                if ($record?->topic?->subject_id) {
+                                    $component->state($record->topic->subject_id);
+                                }
+                            }),
+
                         Select::make('topic_id')
                             ->label('موضوع')
-                            ->options(
-                                fn () => Topic::query()
-                                    ->with('subject')
-                                    ->get()
-                                    ->mapWithKeys(fn (Topic $topic) => [
-                                        $topic->id => ($topic->subject?->title ?? '-').' » '.$topic->title,
-                                    ])
-                            )
+                            ->options(fn (Get $get) => Topic::query()
+                                ->when($get('subject_filter'), fn ($q, $subjectId) => $q->where('subject_id', $subjectId))
+                                ->pluck('title', 'id'))
                             ->searchable()
-                            ->preload()
-                            ->required()
-                            ->columnSpan(3),
+                            ->live()
+                            ->required(),
 
                         TextInput::make('difficulty')
                             ->label('سطح سختی (۱ تا ۵)')
@@ -107,6 +133,38 @@ class QuestionForm
                                 return new HtmlString($html);
                             }),
 
+                        Placeholder::make('duplicate_warning')
+                            ->label('')
+                            ->columnSpanFull()
+                            ->content(function (Get $get, ?Question $record) {
+                                $body = trim((string) $get('body'));
+                                $topicId = $get('topic_id');
+
+                                if ($body === '' || mb_strlen($body) < 10 || ! $topicId) {
+                                    return null;
+                                }
+
+                                $similar = Question::query()
+                                    ->where('topic_id', $topicId)
+                                    ->when($record, fn ($q) => $q->whereKeyNot($record->getKey()))
+                                    ->get()
+                                    ->first(function (Question $question) use ($body) {
+                                        similar_text($question->body, $body, $percent);
+
+                                        return $percent > 80;
+                                    });
+
+                                if (! $similar) {
+                                    return null;
+                                }
+
+                                return new HtmlString(
+                                    '<div style="background:#fff3cd;border:1px solid #ffe69c;color:#664d03;padding:.6rem .85rem;border-radius:.5rem;font-size:.85rem;">'
+                                    .'⚠️ یه سؤال مشابه از قبل توی همین موضوع هست: «'.e(Str::limit($similar->body, 70)).'»'
+                                    .'</div>'
+                                );
+                            }),
+
                         FileUpload::make('image')
                             ->label('تصویر سؤال (اختیاری)')
                             ->image()
@@ -131,6 +189,17 @@ class QuestionForm
                             ->addActionLabel('افزودن گزینه')
                             ->itemLabel(fn (array $state): ?string => $state['body'] ?? null)
                             ->live(onBlur: true)
+                            ->rules([
+                                fn (): Closure => function (string $attribute, $value, Closure $fail) {
+                                    $correctCount = collect($value)
+                                        ->filter(fn ($item) => $item['is_correct'] ?? false)
+                                        ->count();
+
+                                    if ($correctCount !== 1) {
+                                        $fail("باید دقیقاً یک گزینه به‌عنوان پاسخ صحیح انتخاب بشه (الان: {$correctCount} گزینه مشخص شده).");
+                                    }
+                                },
+                            ])
                             ->schema([
                                 TextInput::make('body')
                                     ->label('متن گزینه')
@@ -149,7 +218,7 @@ class QuestionForm
                             ])
                             ->columns(2)
                             ->columnSpanFull()
-                            ->helperText('حداقل یکی از گزینه‌ها باید به‌عنوان «پاسخ صحیح» مشخص شود.'),
+                            ->helperText('دقیقاً یکی از گزینه‌ها باید به‌عنوان «پاسخ صحیح» مشخص بشه — سیستم قبل از ذخیره چک می‌کنه.'),
                     ]),
             ]);
     }

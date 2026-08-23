@@ -10,9 +10,9 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
@@ -59,9 +59,8 @@ class QuestionsTable
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                IconColumn::make('is_active')
-                    ->label('فعال')
-                    ->boolean(),
+                ToggleColumn::make('is_active')
+                    ->label('فعال'),
 
                 TextColumn::make('created_at')
                     ->label('تاریخ ایجاد')

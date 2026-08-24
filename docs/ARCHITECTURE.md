@@ -43,3 +43,6 @@
 - در Filament 5.7.4: کلاس `Get` از `Filament\Schemas\Components\Utilities\Get` میاد (نه `Filament\Forms\Get`)، و `Section` layout از `Filament\Schemas\Components\Section` میاد (نه `Filament\Infolists\Components\Section`).
 - ستون نام `Grade` در دیتابیس `title` است، نه `name`.
 - `LandingController` (در `app/Http/Controllers/`) صفحه‌ی فرود عمومی رو با آمار زنده از دیتابیس رندر می‌کنه؛ روت `/` دیگه به `/admin` ریدایرکت نمی‌شه.
+- الگوی «فیلد فیلتر مجازی» در فرم‌های Filament: فیلدهایی مثل `grade_filter`/`subject_filter` در `QuestionForm` که `dehydrated(false)` دارن و مستقیم ذخیره نمی‌شن، فقط برای فیلتر کردن گزینه‌های یک Select دیگه (مثل `topic_id`) به‌صورت آبشاری استفاده می‌شن. برای پیش‌پرکردنشون در حالت ویرایش، از `afterStateHydrated` با دسترسی به `$record` استفاده می‌شه.
+- Import CSV (`ListQuestions.php`) به‌صورت دومرحله‌ای (بررسی بدون ذخیره → ثبت نهایی) طراحی شده، با یه متد مشترک `processCsv(..., bool $commit)` که هم برای پیش‌نمایش هم برای ثبت واقعی استفاده می‌شه.
+- ابزار بک‌آپ (`backup-db.bat`/`restore-db.bat`) مسیر نصب MySQL رو خودکار زیر `D:\laragodev\bin\mysql\` یا `C:\laragon\bin\mysql\` پیدا می‌کنه.

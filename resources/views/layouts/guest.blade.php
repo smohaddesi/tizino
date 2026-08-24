@@ -10,7 +10,6 @@
     <style>
         body {
             background-color: #f8f9fa;
-            font-family: Tahoma, Arial, sans-serif;
         }
         .auth-card {
             max-width: 420px;

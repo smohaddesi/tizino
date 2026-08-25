@@ -3,6 +3,10 @@
 @section('content')
     <h6 class="text-center text-muted mb-4">ورود به حساب کاربری</h6>
 
+    @if (session('status'))
+        <div class="alert alert-success">{{ session('status') }}</div>
+    @endif
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -18,9 +22,12 @@
                    class="form-control @error('password') is-invalid @enderror" required>
         </div>
 
-        <div class="mb-3 form-check">
-            <input type="checkbox" name="remember" class="form-check-input" id="remember">
-            <label class="form-check-label" for="remember">مرا به خاطر بسپار</label>
+        <div class="mb-3 d-flex justify-content-between align-items-center">
+            <div class="form-check">
+                <input type="checkbox" name="remember" class="form-check-input" id="remember">
+                <label class="form-check-label" for="remember">مرا به خاطر بسپار</label>
+            </div>
+            <a href="{{ route('password.request') }}" class="small">رمز عبورت رو فراموش کردی؟</a>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">ورود</button>

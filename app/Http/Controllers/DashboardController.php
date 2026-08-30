@@ -45,6 +45,7 @@ class DashboardController extends Controller
 
         return view('dashboard', [
             'exams' => $exams,
+            'activeSubscription' => $user->activeSubscription(),
         ]);
     }
 }

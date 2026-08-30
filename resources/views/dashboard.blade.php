@@ -12,11 +12,32 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="mb-0">خوش آمدی، {{ auth()->user()->name }} 👋</h4>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-outline-danger btn-sm">خروج</button>
-            </form>
+            <div class="d-flex gap-2">
+                <a href="{{ route('subscriptions.plans') }}" class="btn btn-warning btn-sm rounded-pill fw-bold">
+                    اشتراک من
+                </a>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger btn-sm">خروج</button>
+                </form>
+            </div>
         </div>
+
+        @if ($activeSubscription)
+            <div class="alert alert-success">
+                اشتراک شما فعال است و تا تاریخ
+                <strong>{{ $activeSubscription->ends_at->format('Y/m/d') }}</strong>
+                اعتبار دارد.
+            </div>
+        @else
+            <div class="alert alert-warning d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <span>شما در حال حاضر اشتراک فعالی ندارید.</span>
+                <a href="{{ route('subscriptions.plans') }}" class="btn btn-sm btn-warning rounded-pill fw-bold">
+                    تهیه‌ی اشتراک
+                </a>
+            </div>
+        @endif
 
         @if (! auth()->user()->grade_id)
             <div class="alert alert-warning">

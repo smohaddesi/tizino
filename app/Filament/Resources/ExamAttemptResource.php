@@ -3,13 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ExamAttemptResource\Pages;
+use App\Filament\Forms\Components\JalaliDateTimePicker;
 use App\Models\Exam;
 use App\Models\ExamAttempt;
+use App\Support\JalaliDate;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -53,12 +54,12 @@ class ExamAttemptResource extends Resource
 
                 TextColumn::make('started_at')
                     ->label('شروع')
-                    ->dateTime('Y-m-d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable(),
 
                 TextColumn::make('submitted_at')
                     ->label('پایان')
-                    ->dateTime('Y-m-d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->placeholder('—')
                     ->sortable(),
 
@@ -104,8 +105,8 @@ class ExamAttemptResource extends Resource
                 Filter::make('started_at')
                     ->label('بازه‌ی شروع')
                     ->schema([
-                        DatePicker::make('from')->label('از تاریخ'),
-                        DatePicker::make('until')->label('تا تاریخ'),
+                        JalaliDateTimePicker::make('from')->label('از تاریخ')->withoutTime(),
+                        JalaliDateTimePicker::make('until')->label('تا تاریخ')->withoutTime(),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query

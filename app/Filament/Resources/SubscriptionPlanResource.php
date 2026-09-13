@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubscriptionPlanResource\Pages;
 use App\Models\SubscriptionPlan;
+use App\Support\JalaliDate;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -115,7 +116,7 @@ class SubscriptionPlanResource extends Resource
 
                 TextColumn::make('created_at')
                     ->label('تاریخ ایجاد')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

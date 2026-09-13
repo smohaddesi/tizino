@@ -3,8 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubscriptionResource\Pages;
+use App\Filament\Forms\Components\JalaliDateTimePicker;
 use App\Models\Subscription;
-use Filament\Forms\Components\DateTimePicker;
+use App\Support\JalaliDate;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -49,15 +50,13 @@ class SubscriptionResource extends Resource
                         ->preload()
                         ->required(),
 
-                    DateTimePicker::make('starts_at')
+                    JalaliDateTimePicker::make('starts_at')
                         ->label('تاریخ شروع')
-                        ->required()
-                        ->native(false),
+                        ->required(),
 
-                    DateTimePicker::make('ends_at')
+                    JalaliDateTimePicker::make('ends_at')
                         ->label('تاریخ پایان')
-                        ->required()
-                        ->native(false),
+                        ->required(),
 
                     Select::make('status')
                         ->label('وضعیت')
@@ -88,12 +87,12 @@ class SubscriptionResource extends Resource
 
                 TextColumn::make('starts_at')
                     ->label('شروع')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable(),
 
                 TextColumn::make('ends_at')
                     ->label('پایان')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable(),
 
                 TextColumn::make('status')
@@ -114,7 +113,7 @@ class SubscriptionResource extends Resource
 
                 TextColumn::make('created_at')
                     ->label('تاریخ ثبت')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Exams\Tables;
 
+use App\Support\JalaliDate;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -46,13 +47,13 @@ class ExamsTable
 
                 TextColumn::make('start_at')
                     ->label('شروع')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('end_at')
                     ->label('پایان')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
@@ -63,7 +64,7 @@ class ExamsTable
 
                 TextColumn::make('created_at')
                     ->label('تاریخ ایجاد')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

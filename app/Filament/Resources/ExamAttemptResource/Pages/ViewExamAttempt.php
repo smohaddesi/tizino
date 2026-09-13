@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ExamAttemptResource\Pages;
 
 use App\Filament\Resources\ExamAttemptResource;
+use App\Support\JalaliDate;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -34,8 +35,8 @@ class ViewExamAttempt extends ViewRecord
                     ->schema([
                         TextEntry::make('user.name')->label('دانش‌آموز'),
                         TextEntry::make('exam.title')->label('آزمون'),
-                        TextEntry::make('started_at')->label('شروع')->dateTime('Y-m-d H:i'),
-                        TextEntry::make('submitted_at')->label('پایان')->dateTime('Y-m-d H:i')->placeholder('—'),
+                        TextEntry::make('started_at')->label('شروع')->formatStateUsing(fn ($state) => JalaliDate::format($state)),
+                        TextEntry::make('submitted_at')->label('پایان')->formatStateUsing(fn ($state) => JalaliDate::format($state))->placeholder('—'),
                         TextEntry::make('is_finished')
                             ->label('وضعیت')
                             ->badge()

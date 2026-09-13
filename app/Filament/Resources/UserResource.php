@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\Grade;
 use App\Models\User;
+use App\Support\JalaliDate;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -111,7 +112,7 @@ class UserResource extends Resource
 
                 TextColumn::make('created_at')
                     ->label('تاریخ ثبت‌نام')
-                    ->dateTime('Y-m-d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

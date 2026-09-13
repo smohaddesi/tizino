@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PaymentResource\Pages;
 use App\Models\Payment;
+use App\Support\JalaliDate;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -74,12 +75,12 @@ class PaymentResource extends Resource
 
                     TextEntry::make('paid_at')
                         ->label('تاریخ پرداخت')
-                        ->dateTime('Y/m/d H:i')
+                        ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                         ->placeholder('—'),
 
                     TextEntry::make('created_at')
                         ->label('تاریخ ثبت')
-                        ->dateTime('Y/m/d H:i'),
+                        ->formatStateUsing(fn ($state) => JalaliDate::format($state)),
                 ]),
         ]);
     }
@@ -129,13 +130,13 @@ class PaymentResource extends Resource
 
                 TextColumn::make('paid_at')
                     ->label('تاریخ پرداخت')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->placeholder('—')
                     ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label('تاریخ ثبت')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable(),
             ])
             ->defaultSort('created_at', 'desc')

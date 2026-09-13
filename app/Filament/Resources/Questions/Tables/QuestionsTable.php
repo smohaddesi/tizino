@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Questions\Tables;
 use App\Filament\Resources\Questions\Pages\EditQuestion;
 use App\Models\Question;
 use App\Models\Subject;
+use App\Support\JalaliDate;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -64,7 +65,7 @@ class QuestionsTable
 
                 TextColumn::make('created_at')
                     ->label('تاریخ ایجاد')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(fn ($state) => JalaliDate::format($state))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

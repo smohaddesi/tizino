@@ -27,7 +27,7 @@
         @if ($activeSubscription)
             <div class="alert alert-success">
                 اشتراک شما فعال است و تا تاریخ
-                <strong>{{ $activeSubscription->ends_at->format('Y/m/d') }}</strong>
+                <strong>{{ \App\Support\JalaliDate::format($activeSubscription->ends_at, 'Y/m/d') }}</strong>
                 اعتبار دارد.
             </div>
         @else

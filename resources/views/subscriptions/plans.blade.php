@@ -30,7 +30,7 @@
         @if ($activeSubscription)
             <div class="alert alert-info text-center mb-5">
                 شما هم‌اکنون یک اشتراک فعال دارید که تا تاریخ
-                <strong>{{ $activeSubscription->ends_at->format('Y/m/d') }}</strong>
+                <strong>{{ \App\Support\JalaliDate::format($activeSubscription->ends_at, 'Y/m/d') }}</strong>
                 اعتبار دارد.
             </div>
         @endif

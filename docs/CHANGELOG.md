@@ -201,30 +201,25 @@
 
 - فعلاً `MAIL_MAILER=log` تنظیمه (برای تست لوکال) — لینک بازیابی به‌جای ارسال ایمیل واقعی، توی `storage/logs/laravel.log` نوشته می‌شه. قبل از deploy نهایی باید به یه SMTP واقعی تغییر کنه.
 
-## 2026-08-29
+## 2026-09-05
 
 ### Added
 
-- سیستم کامل اشتراک و پرداخت (زرین‌پال):
-  - Migrations برای `subscription_plans`، `subscriptions`، `payments`
-  - مدل‌های `SubscriptionPlan`، `Subscription`، `Payment` + رابطه‌ها و متد `User::hasActiveSubscription()` / `User::activeSubscription()`
-  - `SubscriptionPlanSeeder` با دو پلن تستی (ماهانه ۹۹,۰۰۰ تومان / سالانه ۷۹۹,۰۰۰ تومان)
-  - `ZarinPalService` (`app/Services/`) با پشتیبانی از حالت sandbox — آدرس‌های API بر اساس `config('zarinpal.sandbox')` بین `api.zarinpal.com`/`www.zarinpal.com` (عادی) و `sandbox.zarinpal.com` (تست) سوییچ می‌کنن
-  - `SubscriptionController` با متدهای `plans` (نمایش پلن‌ها) / `checkout` (شروع پرداخت) / `callback` (تأیید و فعال‌سازی اشتراک)
-  - `resources/views/subscriptions/plans.blade.php` — صفحه‌ی خرید اشتراک سمت دانش‌آموز (فایل مستقل، بدون layout مشترک، هم‌سبک با `dashboard.blade.php`)
-  - دکمه‌ی «اشتراک من» + نوار وضعیت اشتراک (فعال/غیرفعال) در `dashboard.blade.php`
-  - سه Filament Resource جدید زیر گروه ناوبری «اشتراک و پرداخت»:
-    - `SubscriptionPlanResource` — مدیریت کامل پلن‌ها (CRUD)
-    - `SubscriptionResource` — مدیریت اشتراک‌های کاربران، شامل امکان اعطای دستی اشتراک توسط ادمین
-    - `PaymentResource` — نمایش read-only تراکنش‌ها (List + View، بدون Create/Edit)
-  - تست کامل end-to-end در محیط sandbox زرین‌پال: انتخاب پلن → ریدایرکت به درگاه → تأیید پرداخت تستی → بازگشت به callback → فعال‌سازی رکورد `Subscription` → نمایش وضعیت در داشبورد — با موفقیت تأیید شد
+- تبدیل کامل تاریخ‌های میلادی به شمسی در سراسر پروژه (پنل ادمین + صفحات دانش‌آموزی)؛ ذخیره‌سازی در دیتابیس همچنان میلادی می‌مونه، فقط نمایش/ورودی شمسی شد:
+  - `app/Support/JalaliDate.php` — تبدیل میلادی↔شمسی خودنوشته (بدون پکیج خارجی، چون Packagist روی سیستم توسعه فیلتر بود)
+  - نمایش شمسی در جدول‌ها و infolist های: Grades، Subjects، Topics، Questions، QuestionOptions، Exams، ExamAttempt (جدول + View)، Users، SubscriptionPlan، Payment (جدول + View)، Subscription
+  - `resources/views/dashboard.blade.php` و `resources/views/subscriptions/plans.blade.php` (تاریخ انقضای اشتراک دانش‌آموز)
+- `app/Filament/Forms/Components/JalaliDateTimePicker.php` — فیلد ورودی تاریخ/ساعت شمسی سفارشی برای Filament، با تقویم پاپ‌آپ کامل (گرید روزهای ماه، ناوبری بین ماه‌ها، دکمه‌ی امروز/پاک‌کردن/تأیید)، بدون هیچ وابستگی خارجی؛ جایگزین `DateTimePicker`/`DatePicker` میلادی در:
+  - `ExamForm` (شروع/پایان بازه‌ی فعال بودن آزمون)
+  - `SubscriptionResource` (شروع/پایان اشتراک)
+  - فیلتر «بازه‌ی شروع» در `ExamAttemptResource` (با `->withoutTime()`)
+- اعتبارسنجی صریح (closure-based) برای مقایسه‌ی تاریخ شروع/پایان آزمون (چون `->after()` استاندارد Filament با این فیلد سفارشی درست کار نمی‌کرد)
+- اعتبارسنجی «تاریخ شروع آزمون نباید گذشته باشه» — فقط روی صفحه‌ی ایجاد آزمون فعاله، نه ویرایش
 
 ### Fixed
 
-- آدرس اشتباه API زرین‌پال در نسخه‌ی اولیه‌ی `ZarinPalService` (`payment.zarinpal.com`) با آدرس صحیح طبق مستندات رسمی (`api.zarinpal.com` برای request/verify، `www.zarinpal.com` برای StartPay) جایگزین شد
-- **باگ محیطی مهم (سیستم محل‌کار):** Windows Defender Firewall به‌صورت خاموش خروجی HTTPS پروسه‌ی Apache (`httpd.exe`) رو مسدود کرده بود — این باعث می‌شد `Http::post()` لاراول به زرین‌پال با خطای `cURL error 28: Connection timed out` (بعد از ۱۰ ثانیه) شکست بخوره، در حالی که همون درخواست از طریق PHP CLI (`artisan tinker`) و `curl.exe` مستقیم سیستم بدون مشکل کار می‌کرد. رفع شد با اضافه‌کردن یک Outbound Rule در `wf.msc` که صراحتاً به فایل باینری `httpd.exe` اجازه‌ی اتصال خروجی می‌ده.
+- باگ کشویی‌های انتخاب روز/ماه/سال شمسی: مدل Alpine باید رشته‌ای باشه نه عددی، وگرنه placeholder خالی به‌درستی نمایش داده نمی‌شد و مقدار واقعی فیلد با چیزی که کاربر می‌دید فرق داشت (باعث می‌شد اعتبارسنجی تاریخ گذشته هم رد بشه چون مقدار واقعی هنوز خالی بود)
 
 ### Notes
 
-- برای تست، `.env` باید شامل `ZARINPAL_SANDBOX=true` و یک `ZARINPAL_MERCHANT_ID` به فرم UUID دلخواه باشه؛ قبل از رفتن به production باید `ZARINPAL_SANDBOX=false` بشه و merchant_id واقعی از پنل `my.zarinpal.com` جایگزین بشه.
-- کارهای باقی‌مانده‌ی این حوزه (برای چت‌های جدید و جدا): Middleware قفل دسترسی به بانک سؤال/آزمون برای کاربران بدون اشتراک فعال؛ تبدیل تاریخ‌های میلادی به شمسی در کل پروژه (تصمیم بین نصب `morilog/jalali` یا نوشتن تابع سبک اختصاصی هنوز گرفته نشده).
+- تلاش برای نصب پکیج‌های آماده‌ی تقویم جلالی برای Filament (`morilog/jalali` که فقط Filament ^4 رو پشتیبانی می‌کنه، و `shahriyar3/filament-calendar` که با نسخه‌ی فعلی سازگار بود ولی نصبش هم با VPN شکست خورد) — در نهایت به ساخت راه‌حل کاملاً داخلی/بدون وابستگی ختم شد.

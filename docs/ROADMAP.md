@@ -23,14 +23,11 @@
 ## Phase 3 — Student & Exam UI
 - [x] Student registration & login
 - [x] Exam taking flow (timer, answers, scoring, review)
-- [ ] Reports / Dashboard / Analytics
-- [ ] Student Panel
+- [x] Student Panel (Layout مشترک + سایدبار، داشبورد با کارت‌های آماری، پروفایل)
+- [x] Question Bank student access (`/bank` با قفل اشتراک و پیش‌نمایش سؤال نمونه)
 - [ ] Online Exam
 - [ ] Timed Exam
-- [ ] Reports
-- [ ] Dashboard
-- [ ] Analytics
-- [ ] Progress Charts
+- [ ] Reports / Analytics / Progress Charts (کارنامه، تحلیل آزمون، نمودار پیشرفت)
 - [x] User Management (UserResource — مدیریت دانش‌آموزان و ادمین‌ها)
 - [ ] Role Management
 - [ ] Settings
@@ -39,3 +36,4 @@
 ## Phase 4 — Localization
 
 - [x] تقویم شمسی در سراسر سایت (نمایش تاریخ در پنل ادمین + صفحات دانش‌آموزی، و ورودی تاریخ در فرم‌های آزمون/اشتراک/فیلترها)
+- [x] ارقام فارسی در سراسر پنل دانش‌آموز (اعداد، صفحه‌بندی، تایمر آزمون)

@@ -86,8 +86,12 @@ class QuestionForm
                         Toggle::make('is_active')
                             ->label('فعال')
                             ->default(true)
-                            ->required()
-                            ->columnSpan(3),
+                            ->required(),
+
+                        Toggle::make('is_free_sample')
+                            ->label('نمونه‌ی رایگان (بدون اشتراک هم قابل مشاهده باشه)')
+                            ->default(false)
+                            ->columnSpan(2),
                     ]),
 
                 Section::make('متن سؤال')

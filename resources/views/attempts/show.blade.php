@@ -62,8 +62,8 @@
                              id="question-{{ $eq->id }}">
                             <div class="card-body">
                                 <h6 class="mb-3">
-                                    سؤال {{ $eq->question_number }} از {{ $examQuestions->count() }}
-                                    <span class="text-muted small">(نمره: {{ $eq->score }})</span>
+                                    سؤال {{ \App\Support\JalaliDate::toPersianDigits($eq->question_number) }} از {{ \App\Support\JalaliDate::toPersianDigits($examQuestions->count()) }}
+                                    <span class="text-muted small">(نمره: {{ \App\Support\JalaliDate::toPersianDigits($eq->score) }})</span>
                                 </h6>
                                 <p class="mb-3">{{ $eq->question->body }}</p>
 
@@ -117,7 +117,7 @@
                                         class="btn btn-outline-secondary q-nav-btn {{ $isAnswered ? 'answered' : '' }} {{ $index === 0 ? 'current' : '' }}"
                                         data-index="{{ $index }}"
                                         data-eq-id="{{ $eq->id }}">
-                                    {{ $eq->question_number }}
+                                    {{ \App\Support\JalaliDate::toPersianDigits($eq->question_number) }}
                                 </button>
                             @endforeach
                         </div>
@@ -139,6 +139,12 @@
         const questionBlocks = document.querySelectorAll('.question-block');
         const navButtons = document.querySelectorAll('.q-nav-btn');
         let currentIndex = 0;
+
+        const faDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+
+        function toFaDigits(input) {
+            return String(input).replace(/[0-9]/g, (d) => faDigits[d]);
+        }
 
         function showQuestion(index) {
             questionBlocks.forEach(block => block.classList.add('d-none'));
@@ -216,7 +222,7 @@
         function formatTime(totalSeconds) {
             const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
             const s = Math.floor(totalSeconds % 60).toString().padStart(2, '0');
-            return `${m}:${s}`;
+            return toFaDigits(`${m}:${s}`);
         }
 
         const timerEl = document.getElementById('timer');

@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>نتیجه‌ی آزمون - {{ $exam->title }}</title>
+@extends('layouts.app')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+@section('title', 'نتیجه‌ی آزمون - ' . $exam->title)
 
+@push('styles')
     <style>
         .review-row.correct {
             border-right: 4px solid #198754;
@@ -18,10 +14,11 @@
             border-right: 4px solid #adb5bd;
         }
     </style>
-</head>
-<body class="bg-light">
-    <div class="container py-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+@endpush
+
+@section('content')
+    <div class="container py-4 py-lg-5">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
             <h5 class="mb-0">نتیجه‌ی آزمون: {{ $exam->title }}</h5>
             <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-sm">بازگشت به داشبورد</a>
         </div>
@@ -31,7 +28,7 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <div class="text-muted small">نمره</div>
-                        <div class="fs-4 fw-bold">{{ $attempt->score }} / {{ $exam->total_score }}</div>
+                        <div class="fs-4 fw-bold">{{ \App\Support\JalaliDate::toPersianDigits($attempt->score) }} / {{ \App\Support\JalaliDate::toPersianDigits($exam->total_score) }}</div>
                     </div>
                 </div>
             </div>
@@ -39,7 +36,7 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <div class="text-muted small">پاسخ صحیح</div>
-                        <div class="fs-4 fw-bold text-success">{{ $attempt->correct_answers }}</div>
+                        <div class="fs-4 fw-bold text-success">{{ \App\Support\JalaliDate::toPersianDigits($attempt->correct_answers) }}</div>
                     </div>
                 </div>
             </div>
@@ -47,7 +44,7 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <div class="text-muted small">پاسخ غلط</div>
-                        <div class="fs-4 fw-bold text-danger">{{ $attempt->wrong_answers }}</div>
+                        <div class="fs-4 fw-bold text-danger">{{ \App\Support\JalaliDate::toPersianDigits($attempt->wrong_answers) }}</div>
                     </div>
                 </div>
             </div>
@@ -55,7 +52,7 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <div class="text-muted small">بدون پاسخ</div>
-                        <div class="fs-4 fw-bold text-secondary">{{ $attempt->blank_answers }}</div>
+                        <div class="fs-4 fw-bold text-secondary">{{ \App\Support\JalaliDate::toPersianDigits($attempt->blank_answers) }}</div>
                     </div>
                 </div>
             </div>
@@ -72,7 +69,7 @@
             <div class="card review-row {{ $status }} mb-2">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <strong>سؤال {{ $answer->examQuestion->question_number }}</strong>
+                        <strong>سؤال {{ \App\Support\JalaliDate::toPersianDigits($answer->examQuestion->question_number) }}</strong>
                         <span class="badge {{ $status === 'correct' ? 'bg-success' : ($status === 'wrong' ? 'bg-danger' : 'bg-secondary') }}">
                             @if ($status === 'correct') صحیح
                             @elseif ($status === 'wrong') غلط
@@ -95,5 +92,4 @@
             </div>
         @endforeach
     </div>
-</body>
-</html>
+@endsection

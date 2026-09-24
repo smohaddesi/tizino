@@ -20,10 +20,12 @@ class Question extends Model
         'source',
         'answer_explanation',
         'is_active',
+        'is_free_sample',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'is_free_sample' => 'boolean',
     ];
 
     public function topic(): BelongsTo

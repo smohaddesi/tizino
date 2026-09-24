@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>اشتراک تیزینو</title>
+@extends('layouts.app')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-light">
-    <div class="container py-5">
+@section('title', 'اشتراک تیزینو')
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+@section('content')
+    <div class="container py-4 py-lg-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
             <h4 class="mb-0">اشتراک تیزینو</h4>
             <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-sm">بازگشت به داشبورد</a>
         </div>
@@ -43,7 +38,7 @@
                             <h5 class="card-title fw-bold">{{ $plan->title }}</h5>
 
                             <div class="my-3">
-                                <span class="display-6 fw-bold">{{ number_format($plan->price) }}</span>
+                                <span class="display-6 fw-bold">{{ \App\Support\JalaliDate::toPersianDigits(number_format($plan->price)) }}</span>
                                 <span class="text-muted">تومان</span>
                             </div>
 
@@ -66,5 +61,4 @@
         </div>
 
     </div>
-</body>
-</html>
+@endsection

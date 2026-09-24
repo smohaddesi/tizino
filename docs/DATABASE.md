@@ -23,6 +23,8 @@ Exam
 - هر ExamQuestion به یک Exam و یک Question متصل است.
 - هر ExamAttempt متعلق به یک Exam و یک User است.
 - SchoolClass فعلاً بدون رابطه و خارج از جریان اصلی بانک سؤال است (تصمیم معماری).
+- `questions.is_free_sample` (boolean, پیش‌فرض false) — سؤال بدون نیاز به اشتراک فعال هم در بانک سؤال دانش‌آموزی قابل مشاهده‌ست.
+- `users.avatar` (string, nullable) — مسیر فایل عکس پروفایل روی دیسک `public` (نیازمند `php artisan storage:link`).
 
 ## Implemented Tables
 

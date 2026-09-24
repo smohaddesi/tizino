@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Subject extends Model
 {
@@ -22,5 +23,10 @@ class Subject extends Model
     public function topics(): HasMany
     {
         return $this->hasMany(Topic::class);
+    }
+
+    public function questions(): HasManyThrough
+    {
+        return $this->hasManyThrough(Question::class, Topic::class);
     }
 }

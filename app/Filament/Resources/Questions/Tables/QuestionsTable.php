@@ -63,6 +63,9 @@ class QuestionsTable
                 ToggleColumn::make('is_active')
                     ->label('فعال'),
 
+                ToggleColumn::make('is_free_sample')
+                    ->label('نمونه‌ی رایگان'),
+
                 TextColumn::make('created_at')
                     ->label('تاریخ ایجاد')
                     ->formatStateUsing(fn ($state) => JalaliDate::format($state))
@@ -100,6 +103,9 @@ class QuestionsTable
 
                 TernaryFilter::make('is_active')
                     ->label('وضعیت فعال بودن'),
+
+                TernaryFilter::make('is_free_sample')
+                    ->label('نمونه‌ی رایگان'),
             ])
             ->recordActions([
                 EditAction::make()

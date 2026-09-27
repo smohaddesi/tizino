@@ -18,6 +18,7 @@ class SubjectsTable
             ->columns([
                 TextColumn::make('id')
                     ->label('#')
+                    ->formatStateUsing(fn ($state) => JalaliDate::toPersianDigits($state))
                     ->sortable(),
 
                 TextColumn::make('grade.title')
@@ -32,6 +33,7 @@ class SubjectsTable
 
                 TextColumn::make('sort_order')
                     ->label('ترتیب')
+                    ->formatStateUsing(fn ($state) => JalaliDate::toPersianDigits($state))
                     ->sortable(),
 
                 TextColumn::make('created_at')

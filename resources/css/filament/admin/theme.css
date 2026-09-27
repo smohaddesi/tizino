@@ -2,3 +2,188 @@
 
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
+
+/* ==========================================================
+   Custom panel restyle — inspired by reference design
+   زبان، جهت (RTL) و فونت پروژه دست‌نخورده مونده؛ فقط رنگ،
+   فاصله‌گذاری و شکل ظاهری کامپوننت‌ها تغییر کرده.
+   ========================================================== */
+
+:root {
+    --panel-bg: #f6f7f9;
+    --panel-border: #e7e9ec;
+    --panel-radius: 0.75rem;
+}
+
+body,
+.fi-body {
+    background-color: var(--panel-bg);
+}
+
+/* ---------- سایدبار ---------- */
+
+.fi-sidebar {
+    background-color: #ffffff;
+    border-inline-start: 1px solid var(--panel-border);
+    box-shadow: none;
+}
+
+.fi-sidebar-header {
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.fi-sidebar-group-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: #9aa1ac;
+    text-transform: none;
+}
+
+.fi-sidebar-item-button {
+    border-radius: 0.6rem;
+    margin-inline: 0.25rem;
+    transition: background-color 120ms ease, color 120ms ease;
+}
+
+.fi-sidebar-item-button:hover {
+    background-color: #f4f5f7;
+}
+
+.fi-sidebar-item-active > .fi-sidebar-item-button {
+    background-color: color-mix(in srgb, var(--primary-500, #f59e0b) 12%, white);
+    color: var(--primary-600, #d97706);
+    font-weight: 600;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: var(--primary-600, #d97706);
+}
+
+/* بج شمارشی کنار آیتم‌های سایدبار */
+.fi-sidebar-item-badge,
+.fi-sidebar-item .fi-badge {
+    background-color: #eef0f2;
+    color: #6b7280;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.7rem;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-badge,
+.fi-sidebar-item-active .fi-badge {
+    background-color: var(--primary-500, #f59e0b);
+    color: #ffffff;
+}
+
+/* ---------- تاپ‌بار و بردکرامب ---------- */
+
+.fi-topbar {
+    background-color: transparent;
+    box-shadow: none;
+    border-bottom: none;
+}
+
+.fi-header-breadcrumbs {
+    font-size: 0.8rem;
+    color: #9aa1ac;
+}
+
+.fi-header-heading {
+    font-weight: 700;
+}
+
+/* ---------- کارت‌های آماری (Stat Widgets) ---------- */
+
+.fi-wi-stats-overview-stat {
+    background-color: #ffffff;
+    border: 1px solid var(--panel-border);
+    border-radius: var(--panel-radius);
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03);
+    position: relative;
+    overflow: visible;
+}
+
+.fi-wi-stats-overview-stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+/* خط موجی پایین کارت آماری (شبیه رسید کاغذی) */
+.fi-wi-stats-overview-stat::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: -6px;
+    height: 12px;
+    background-image: radial-gradient(circle at 6px 0, transparent 6px, #ffffff 6.5px);
+    background-size: 12px 12px;
+    background-repeat: repeat-x;
+}
+
+/* ---------- تب‌ها (Pill Tabs) ---------- */
+
+.fi-tabs {
+    background-color: #f0f1f3;
+    border-radius: 999px;
+    padding: 0.25rem;
+    display: inline-flex;
+    gap: 0.25rem;
+}
+
+.fi-tabs-item {
+    border-radius: 999px;
+    padding-inline: 0.9rem;
+    padding-block: 0.35rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.fi-tabs-item-active {
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+.fi-tabs-item .fi-badge {
+    border-radius: 999px;
+    font-size: 0.65rem;
+}
+
+/* ---------- جدول‌ها ---------- */
+
+.fi-ta {
+    border: 1px solid var(--panel-border);
+    border-radius: var(--panel-radius);
+    overflow: hidden;
+}
+
+.fi-ta-header-cell {
+    background-color: #fafafb;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: none;
+}
+
+.fi-ta-row {
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.fi-ta-row:hover {
+    background-color: #fafafb;
+}
+
+.fi-ta-row:last-child {
+    border-bottom: none;
+}
+
+/* ---------- دکمه‌ها ---------- */
+
+.fi-btn {
+    border-radius: 0.6rem;
+    font-weight: 600;
+}
+
+.fi-btn-color-primary {
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+}

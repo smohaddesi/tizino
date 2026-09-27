@@ -243,3 +243,20 @@
 ### Notes
 
 - فرم ثبت‌نام (`RegisteredUserController` + View) هنوز آپدیت نشده تا پایه‌ی تحصیلی رو در همون مرحله بپرسه — چون فایل‌هاش هنوز فرستاده نشده؛ برای جلسه‌ی بعد باقی موند.
+
+## 2026-09-27
+
+### Added
+
+- بازطراحی بصری پنل ادمین:
+  - `resources/css/filament/admin/theme.css` بازنویسی شد — سایدبار سفید با آیتم فعال نارنجی، بج‌های شمارشی گرد، کارت‌های آماری با لبه‌ی موجی، تب‌های Pill، جدول‌های تمیزتر با بردر ظریف (بدون تغییر زبان/جهت RTL/فونت Vazirmatn)
+  - داشبورد ادمین با ویجت جدید `DashboardTilesWidget` (+ View مربوطه در `resources/views/filament/widgets/dashboard-tiles-widget.blade.php`) جایگزین ویجت‌های پیش‌فرض `AccountWidget`/`FilamentInfoWidget` شد — کاشی‌های تخت‌رنگ گروه‌بندی‌شده (سیستم آزمون، بانک سؤال، اشتراک و پرداخت، مدیریت کاربران) با تعداد واقعی از دیتابیس و لینک مستقیم به هر Resource؛ گرید با `auto-fit` واقعاً ریسپانسیوه و با `grid-column: 1 / -1` کل عرض ردیف داشبورد رو می‌گیره
+- بومی‌سازی ارقام فارسی به کل پنل ادمین (قبلاً فقط پنل دانش‌آموز پوشش داده شده بود):
+  - ستون‌های عددی در `ExamsTable`، `SubjectsTable`، `SubscriptionPlanResource` با `JalaliDate::toPersianDigits()`
+  - View مشترک pagination خود Filament (`resources/views/vendor/filament/components/pagination/index.blade.php` و `item.blade.php`، publish شده با تگ `filament-views`) اصلاح شد — «نمایش X تا Y از Z»، دراپ‌داون تعداد در صفحه، و شماره‌صفحه‌ها همه‌جای پنل ادمین حالا فارسی‌ان
+- ستون «فعال» در `ExamsTable` و `SubscriptionPlanResource` از `IconColumn` به `ToggleColumn` تبدیل شد — تغییر مستقیم از جدول
+
+### Notes
+
+- تلاش برای نصب تم آماده‌ی `filafly/brisk` روی پنل ادمین شکست خورد — این پکیج فقط `filament/filament: ^4.0` رو ساپورت می‌کنه، با v5.7.4 پروژه ناسازگاره؛ به‌جاش با CSS دستی + ویجت سفارشی جلو رفتیم.
+- View‌های publish‌شده‌ی اضافی و بلااستفاده (`resources/views/vendor/filament-panels`, `filament-tables`) پاک شدن؛ فقط `resources/views/vendor/filament/components/pagination` نگه داشته شد چون واقعاً edit شده.

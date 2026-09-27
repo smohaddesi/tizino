@@ -6,8 +6,8 @@ use App\Support\JalaliDate;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
@@ -21,6 +21,7 @@ class ExamsTable
             ->columns([
                 TextColumn::make('id')
                     ->label('#')
+                    ->formatStateUsing(fn ($state) => JalaliDate::toPersianDigits($state))
                     ->sortable(),
 
                 TextColumn::make('title')
@@ -35,14 +36,17 @@ class ExamsTable
 
                 TextColumn::make('duration_minutes')
                     ->label('مدت (دقیقه)')
+                    ->formatStateUsing(fn ($state) => JalaliDate::toPersianDigits($state))
                     ->sortable(),
 
                 TextColumn::make('total_questions')
                     ->label('تعداد سؤال')
+                    ->formatStateUsing(fn ($state) => JalaliDate::toPersianDigits($state))
                     ->sortable(),
 
                 TextColumn::make('total_score')
                     ->label('نمره کل')
+                    ->formatStateUsing(fn ($state) => JalaliDate::toPersianDigits($state))
                     ->sortable(),
 
                 TextColumn::make('start_at')
@@ -57,9 +61,8 @@ class ExamsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                IconColumn::make('is_active')
+                ToggleColumn::make('is_active')
                     ->label('فعال')
-                    ->boolean()
                     ->sortable(),
 
                 TextColumn::make('created_at')

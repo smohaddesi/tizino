@@ -11,8 +11,8 @@ use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -99,19 +99,20 @@ class SubscriptionPlanResource extends Resource
 
                 TextColumn::make('duration_days')
                     ->label('مدت (روز)')
+                    ->formatStateUsing(fn ($state) => JalaliDate::toPersianDigits($state))
                     ->sortable(),
 
                 TextColumn::make('price')
                     ->label('قیمت')
-                    ->money('IRT', divideBy: 1)
+                    ->formatStateUsing(fn ($state) => JalaliDate::toPersianDigits(number_format($state)).' تومان')
                     ->sortable(),
 
-                IconColumn::make('is_active')
-                    ->label('فعال')
-                    ->boolean(),
+                ToggleColumn::make('is_active')
+                    ->label('فعال'),
 
                 TextColumn::make('sort_order')
                     ->label('ترتیب')
+                    ->formatStateUsing(fn ($state) => JalaliDate::toPersianDigits($state))
                     ->sortable(),
 
                 TextColumn::make('created_at')

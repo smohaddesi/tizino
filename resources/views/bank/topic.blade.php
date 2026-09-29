@@ -9,8 +9,21 @@
             font-weight: 600;
         }
 
+        .answer-option.is-wrong-choice {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
         .answer-option {
             margin-bottom: .35rem;
+        }
+
+        .answer-option label {
+            cursor: pointer;
+        }
+
+        .answer-option input:disabled + span {
+            cursor: default;
         }
 
         .answer-option .option-index {
@@ -86,22 +99,42 @@
                         <ul class="list-unstyled small mb-3">
                             @foreach ($question->options as $option)
                                 <li class="answer-option {{ $option->is_correct ? 'is-correct' : '' }}" data-answer-group="q-{{ $question->id }}">
-                                    <span class="option-index">{{ \App\Support\JalaliDate::toPersianDigits($loop->iteration) }}.</span>
-                                    @if ($option->is_correct)
-                                        <span class="answer-check d-none">✔</span>
-                                    @endif
-                                    {{ $option->body }}
+                                    <label class="d-flex align-items-start gap-2 mb-0">
+                                        <input type="radio" class="form-check-input mt-1 flex-shrink-0" name="choice-q-{{ $question->id }}" value="{{ $option->id }}">
+                                        <span>
+                                            <span class="option-index">{{ \App\Support\JalaliDate::toPersianDigits($loop->iteration) }}.</span>
+                                            @if ($option->is_correct)
+                                                <span class="answer-check d-none">✔</span>
+                                            @endif
+                                            <span class="answer-cross d-none">✘</span>
+                                            {{ $option->body }}
+                                        </span>
+                                    </label>
                                 </li>
                             @endforeach
                         </ul>
 
-                        <button type="button" class="btn btn-outline-secondary btn-sm mb-2 toggle-answer-btn" data-target="q-{{ $question->id }}">
-                            نمایش پاسخ
-                        </button>
+                        <div class="d-flex align-items-center gap-3 flex-wrap mb-2">
+                            <button type="button" class="btn btn-outline-secondary btn-sm toggle-answer-btn" data-target="q-{{ $question->id }}">
+                                نمایش پاسخ
+                            </button>
+                            <span class="answer-feedback small fw-bold d-none" data-answer-group="q-{{ $question->id }}"></span>
+                        </div>
 
-                        @if ($question->answer_explanation)
+                        @if ($question->answer_explanation || $question->answer_explanation_image)
                             <div class="answer-explanation d-none" data-answer-group="q-{{ $question->id }}">
-                                <p class="text-muted small mt-2 mb-0">{{ $question->answer_explanation }}</p>
+                                @if ($question->answer_explanation)
+                                    <p class="text-muted small mt-2 mb-0">{{ $question->answer_explanation }}</p>
+                                @endif
+
+                                @if ($question->answer_explanation_image)
+                                    <img
+                                        src="{{ \Illuminate\Support\Facades\Storage::disk(config('filament.default_filesystem_disk', 'public'))->url($question->answer_explanation_image) }}"
+                                        alt="تصویر پاسخ تشریحی"
+                                        class="img-fluid rounded border mt-2"
+                                        style="max-height: 320px;"
+                                        loading="lazy">
+                                @endif
                             </div>
                         @endif
                     @endif
@@ -121,21 +154,53 @@
                     const group = btn.dataset.target;
                     const options = document.querySelectorAll(`.answer-option[data-answer-group="${group}"]`);
                     const explanation = document.querySelector(`.answer-explanation[data-answer-group="${group}"]`);
-                    const revealed = options.length > 0 && options[0].classList.contains('revealed');
+                    const feedback = document.querySelector(`.answer-feedback[data-answer-group="${group}"]`);
+                    const revealing = options.length > 0 && !options[0].classList.contains('revealed');
 
                     options.forEach(opt => {
-                        opt.classList.toggle('revealed');
+                        const radio = opt.querySelector('input[type="radio"]');
                         const check = opt.querySelector('.answer-check');
+                        const cross = opt.querySelector('.answer-cross');
+                        const isCorrect = opt.classList.contains('is-correct');
+                        const isChosen = radio && radio.checked;
+
+                        opt.classList.toggle('revealed', revealing);
+                        opt.classList.toggle('is-wrong-choice', revealing && isChosen && !isCorrect);
+
                         if (check) {
-                            check.classList.toggle('d-none');
+                            check.classList.toggle('d-none', !revealing);
+                        }
+
+                        if (cross) {
+                            cross.classList.toggle('d-none', !(revealing && isChosen && !isCorrect));
+                        }
+
+                        if (radio) {
+                            radio.disabled = revealing;
                         }
                     });
 
-                    if (explanation) {
-                        explanation.classList.toggle('d-none');
+                    if (feedback) {
+                        const chosen = document.querySelector(`input[name="choice-${group}"]:checked`);
+
+                        feedback.classList.remove('text-success', 'text-danger');
+
+                        if (revealing && chosen) {
+                            const chosenIsCorrect = chosen.closest('.answer-option').classList.contains('is-correct');
+                            feedback.textContent = chosenIsCorrect ? 'آفرین! پاسخ شما درست بود.' : 'پاسخ شما درست نبود.';
+                            feedback.classList.add(chosenIsCorrect ? 'text-success' : 'text-danger');
+                            feedback.classList.remove('d-none');
+                        } else {
+                            feedback.textContent = '';
+                            feedback.classList.add('d-none');
+                        }
                     }
 
-                    btn.textContent = revealed ? 'نمایش پاسخ' : 'پنهان کردن پاسخ';
+                    if (explanation) {
+                        explanation.classList.toggle('d-none', !revealing);
+                    }
+
+                    btn.textContent = revealing ? 'پنهان کردن پاسخ' : 'نمایش پاسخ';
                 });
             });
         </script>

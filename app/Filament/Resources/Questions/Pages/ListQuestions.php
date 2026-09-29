@@ -31,7 +31,7 @@ class ListQuestions extends ListRecords
                     $bom = "\xEF\xBB\xBF";
 
                     $header = [
-                        'درس', 'موضوع', 'متن سؤال', 'سطح سختی (۱ تا ۵)', 'زمان پاسخ (ثانیه)',
+                        'درس', 'موضوع', 'متن سؤال', 'سطح سختی (۱ تا ۵)', 'زمان پاسخ (ثانیه — اختیاری)',
                         'منبع', 'توضیح پاسخ', 'فعال (۱ یا ۰)',
                         'گزینه ۱', 'گزینه ۱ صحیح (۱ یا ۰)',
                         'گزینه ۲', 'گزینه ۲ صحیح (۱ یا ۰)',
@@ -253,7 +253,7 @@ class ListQuestions extends ListRecords
                     'topic_id' => $topic->id,
                     'body' => trim((string) $body),
                     'difficulty' => (int) ($difficulty !== null && $difficulty !== '' ? $difficulty : 2),
-                    'answer_time' => (int) ($answerTime !== null && $answerTime !== '' ? $answerTime : 75),
+                    'answer_time' => $answerTime !== null && trim((string) $answerTime) !== '' ? (int) $answerTime : null,
                     'source' => trim((string) $source) !== '' ? trim((string) $source) : null,
                     'answer_explanation' => trim((string) $explanation) !== '' ? trim((string) $explanation) : null,
                     'is_active' => $isActive === null || $isActive === '' || in_array(strtolower(trim((string) $isActive)), self::TRUTHY, true),

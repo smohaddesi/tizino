@@ -12,17 +12,12 @@ class CreateQuestion extends CreateRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        if ($topicId = session('last_question_topic_id')) {
-            $topic = Topic::find($topicId);
+        $topicId = session('last_question_topic_id');
 
-            if ($topic) {
-                $data['topic_id'] = $topic->id;
-                $data['subject_filter'] = $topic->subject_id;
-                $data['grade_filter'] = $topic->subject?->grade_id;
-            }
-
+        if ($topicId && Topic::whereKey($topicId)->exists()) {
+            $data['topic_id'] = $topicId;
             $data['difficulty'] = session('last_question_difficulty', 2);
-            $data['answer_time'] = session('last_question_answer_time', 75);
+            $data['answer_time'] = session('last_question_answer_time');
         }
 
         return $data;

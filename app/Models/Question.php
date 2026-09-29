@@ -19,6 +19,7 @@ class Question extends Model
         'answer_time',
         'source',
         'answer_explanation',
+        'answer_explanation_image',
         'is_active',
         'is_free_sample',
     ];

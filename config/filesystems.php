@@ -47,6 +47,15 @@ return [
             'report' => false,
         ],
 
+        'site_fonts' => [
+            'driver' => 'local',
+            'root' => public_path('fonts/site'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/fonts/site',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

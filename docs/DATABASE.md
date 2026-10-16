@@ -28,9 +28,16 @@ Exam
 - `questions.answer_explanation_image` (string, nullable) — مسیر تصویر پاسخ تشریحی سؤال، بعد از `answer_explanation`.
 - `users.avatar` (string, nullable) — مسیر فایل عکس پروفایل روی دیسک `public` (نیازمند `php artisan storage:link`).
 
+## Settings Tables
+
+- `landing_settings` (key یکتا، value JSON) — محتوای صفحه‌ی فرود؛ کلید `content`
+- `site_fonts` (name، is_active، variants JSON با وزن‌های 400/500/700) — فونت‌های سایت؛ یک ردیف برای هر خانواده
+
 ## Implemented Tables
 
 - users
+- landing_settings
+- site_fonts
 - cache
 - jobs
 - grades

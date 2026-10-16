@@ -1,3 +1,35 @@
+## 2026-10-12
+
+### Added
+
+- صفحه‌ی فرود (Landing Page) قابل ویرایش از پنل ادمین (تنظیمات → «صفحه‌ی فرود»)
+  - جدول `landing_settings` (یک ردیف با کلید `content` و مقدار JSON؛ مقادیر پیش‌فرض در `LandingSetting::content()`)
+  - `LandingPageSettings` (Filament Page) با سه Tab: «ظاهر و منو»، «بخش اصلی (Hero)»، «کارت آزمون نمونه»
+  - آمار صفحه: هر آمار یا «دستی» است یا از دیتابیس محاسبه می‌شود (`source`)؛ ارقام فارسی در کنترلر تولید می‌شن
+  - آیکون‌ها به‌صورت SVG inline (`partials/icon.blade.php`)؛ FAQ با `<details>` بومی
+- فونت‌های سایت (تنظیمات → «فونت‌های سایت»)
+  - جدول `site_fonts` با یک ردیف برای هر خانواده و ستون JSON `variants` (وزن‌های 400/500/700)
+  - `SiteFont` مدل + `SiteFontResource` + صفحه‌ی `ManageSiteFonts`؛ فقط یک خانواده می‌تواند فعال باشد
+  - فونت فعال با `partials/site-font.blade.php` در صفحه‌ی فرود تزریق می‌شود (`<style id="site-font">`)
+  - دیسک `site_fonts` (`public/fonts/site`) برای آپلود فایل‌ها؛ دلیل: جلوگیری از خطای 403 در `public/storage`
+  - `SiteFont::activeCss()` مسیرهای موقت Livewire (`livewire-file:`) را نادیده می‌گیرد
+- Migrationها:
+  - `2026_10_09_100000_create_landing_settings_table.php`
+  - `2026_10_09_110000_create_site_fonts_table.php`
+  - `2026_10_12_120000_convert_site_fonts_to_variants.php`
+
+### Changed
+
+- روت `/` به `LandingController` متصل شد (قبلاً به `/admin` ریدایرکت می‌کرد)
+- `config/filesystems.php`: دیسک `site_fonts` اضافه شد
+
+### Notes
+
+- لینک‌های `/login`, `/register`, `/bank`, `/dashboard` در صفحه‌ی فرود هنوز هاردکد هستند.
+- فونت «یکان» (Yekan) از `public/fonts/yekan/` هم در `app.css` و هم در `landing.blade.php` تعریف شده؛ یکی از این دو باید حذف شود.
+- لایه‌ی guest (`layouts/guest.blade.php`) هنوز فونت سایت را دریافت نمی‌کند.
+- اجرای تست‌ها و تست دستی مرورگر توسط دستیار انجام نشده؛ باید در لوکال بررسی شود.
+
 ## 2026-08-03
 
 ### Added

@@ -1,0 +1,91 @@
+Tizino - Project Structure (DRAFT)
+==================================
+این پیش‌نویس فقط از روی مسیرهایی ساخته شده که در داک‌ها ذکر شده‌اند و با دیسک واقعی تطبیق داده نشده.
+نسخه‌ی دقیق را با دستور PowerShell داخل پوشه‌ی پروژه تولید و جایگزین کنید.
+
+ROOT
+  backup-db.bat
+  restore-db.bat
+  .env  (APP_TIMEZONE=Asia/Tehran، MAIL_MAILER=log در لوکال)
+
+config/
+  app.php                      (timezone باید از env خوانده شود)
+
+routes/
+  web.php
+
+docs/
+  ARCHITECTURE.md
+  CHANGELOG.md
+  DATABASE.md
+  DEVELOPMENT_GUIDE.md
+  PROJECT_RULES.md
+  ROADMAP.md
+  STRUCTURE.txt
+
+app/
+  Support/
+    JalaliDate.php
+  Models/
+    User.php                   (از Attributes: #[Fillable], #[Hidden])
+    Grade, Subject, Topic, Question, QuestionOption, SchoolClass,
+    Exam, ExamQuestion, ExamAttempt, AttemptAnswer,
+    SubscriptionPlan, Subscription, Payment
+  Http/Controllers/
+    LandingController.php
+    (Model) LandingSetting.php, SiteFont.php
+    DashboardController.php
+    ProfileController.php
+    QuestionBankController.php
+    ExamAttemptController.php
+    SubscriptionController.php
+    (Auth: RegisteredUserController, PasswordResetLinkController, NewPasswordController - زیرپوشه‌ی دقیق بررسی نشده)
+  Services/
+    ZarinPalService.php        (مسیر دقیق بررسی نشده)
+  Filament/
+    Resources/                 (هر Resource مستقیم زیر این پوشه)
+      Grades, Subjects, Topics, Questions (QuestionForm, QuestionsTable, ListQuestions, CreateQuestion),
+      QuestionOptions, Exams (ExamForm, ExamsTable, QuestionsRelationManager),
+      ExamAttempts, Users, SubscriptionPlans, Subscriptions, Payments
+    Forms/Components/
+      JalaliDateTimePicker.php
+    Widgets/
+      DashboardTilesWidget.php
+  Providers/Filament/
+    AdminPanelProvider.php     (مسیر استاندارد؛ بررسی نشده)
+
+resources/
+  css/
+    app.css                    (فونت Estedad + fallback Vazirmatn)
+    filament/admin/theme.css
+  views/
+    landing.blade.php
+    partials/icon.blade.php, partials/site-font.blade.php
+    dashboard.blade.php
+    layouts/
+      app.blade.php            (Layout مشترک پنل دانش‌آموز)
+      guest.blade.php
+    auth/                      (login, register, forgot-password, reset-password)
+    bank/
+      topic.blade.php          (و صفحات پایه/درس در همین پوشه)
+    subscriptions/
+      plans.blade.php
+    attempts/
+      result.blade.php
+      show.blade.php           (صفحه‌ی حین آزمون - مسیر دقیق بررسی نشده)
+    profile/                   (مسیر دقیق بررسی نشده)
+    pagination/
+      bootstrap-5-fa.blade.php
+    filament/
+      forms/components/jalali-date-time-picker.blade.php
+      widgets/dashboard-tiles-widget.blade.php
+    vendor/filament/components/pagination/
+      index.blade.php
+      item.blade.php
+
+database/
+  migrations/                  (شامل: users.grade_id, users.avatar, questions.is_free_sample,
+                                questions.answer_time nullable, questions.answer_explanation_image)
+  seeders/
+    SubjectSeeder.php
+    TopicSeeder.php

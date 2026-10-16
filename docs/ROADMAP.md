@@ -31,7 +31,10 @@
 - [x] User Management (UserResource — مدیریت دانش‌آموزان و ادمین‌ها)
 - [ ] Role Management
 - [ ] Settings
-- [x] Public Landing Page (نیاز به بهسازی بیشتر دارد)
+- [x] Public Landing Page (قابل ویرایش از پنل ادمین؛ نیاز به بهسازی بیشتر دارد)
+- [x] فونت‌های سایت از پنل ادمین (`SiteFont`، فعلاً روی صفحه‌ی فرود)
+- [ ] اعمال فونت سایت روی layout مهمان (`layouts/guest.blade.php`)
+- [ ] حذف فونت Yekan تکراری از `landing.blade.php`
 - [x] بازطراحی بصری پنل ادمین (theme.css سفارشی + ویجت کاشی‌های داشبورد `DashboardTilesWidget`)
 - [x] ساده‌سازی فرم ورود سؤال (تک‌ستونه، موضوع گروه‌بندی‌شده، پاسخ تشریحی با تصویر، `answer_time` اختیاری)
 - [x] انتخاب پاسخ توسط دانش‌آموز در بانک سؤال (سمت کلاینت)
